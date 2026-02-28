@@ -1,14 +1,24 @@
 package com.dusty.presentation.navigation
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,15 +40,16 @@ import com.dusty.presentation.screens.seller.SellerDashboardScreen
 
 private data class BottomNavItem(
     val label: String,
-    val icon: @Composable () -> Unit,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
     val route: Any
 )
 
 private val bottomNavItems = listOf(
-    BottomNavItem("Home", { Icon(Icons.Default.Home, contentDescription = "Home") }, HomeRoute),
-    BottomNavItem("Browse", { Icon(Icons.Default.Search, contentDescription = "Browse") }, BrowseRoute),
-    BottomNavItem("Cart", { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") }, CartRoute),
-    BottomNavItem("Profile", { Icon(Icons.Default.Person, contentDescription = "Profile") }, ProfileRoute),
+    BottomNavItem("Home", Icons.Filled.Home, Icons.Outlined.Home, HomeRoute),
+    BottomNavItem("Browse", Icons.Filled.Search, Icons.Outlined.Search, BrowseRoute),
+    BottomNavItem("Cart", Icons.Filled.ShoppingCart, Icons.Outlined.ShoppingCart, CartRoute),
+    BottomNavItem("Profile", Icons.Filled.Person, Icons.Outlined.Person, ProfileRoute),
 )
 
 @Composable
@@ -47,7 +58,6 @@ fun DustyNavGraph() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    // Show bottom bar only on main tabs
     val showBottomBar = currentDestination?.let { dest ->
         dest.hasRoute<HomeRoute>() || dest.hasRoute<BrowseRoute>() ||
         dest.hasRoute<CartRoute>() || dest.hasRoute<ProfileRoute>()
@@ -57,7 +67,8 @@ fun DustyNavGraph() {
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 0.dp
                 ) {
                     bottomNavItems.forEach { item ->
                         val isSelected = when (item.route) {
@@ -67,9 +78,31 @@ fun DustyNavGraph() {
                             is ProfileRoute -> currentDestination?.hasRoute<ProfileRoute>() == true
                             else -> false
                         }
+
+                        val iconScale by animateFloatAsState(
+                            targetValue = if (isSelected) 1.1f else 1f,
+                            animationSpec = tween(200)
+                        )
+
                         NavigationBarItem(
-                            icon = item.icon,
-                            label = { Text(item.label) },
+                            icon = {
+                                Icon(
+                                    imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
+                                    contentDescription = item.label,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .graphicsLayer {
+                                            scaleX = iconScale
+                                            scaleY = iconScale
+                                        }
+                                )
+                            },
+                            label = {
+                                Text(
+                                    item.label,
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            },
                             selected = isSelected,
                             onClick = {
                                 navController.navigate(item.route) {
@@ -77,7 +110,14 @@ fun DustyNavGraph() {
                                     launchSingleTop = true
                                     restoreState = true
                                 }
-                            }
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = MaterialTheme.colorScheme.primary,
+                                selectedTextColor = MaterialTheme.colorScheme.primary,
+                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                indicatorColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                            )
                         )
                     }
                 }

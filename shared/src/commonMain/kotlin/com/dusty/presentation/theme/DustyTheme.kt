@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 private val DustyLightColorScheme = lightColorScheme(
     primary = DustyBrown,
     onPrimary = WarmWhite,
-    primaryContainer = DustyBrownLight,
+    primaryContainer = LightOak,
     onPrimaryContainer = DarkEspresso,
     secondary = AntiqueGold,
     onSecondary = DarkEspresso,
@@ -26,9 +26,18 @@ private val DustyLightColorScheme = lightColorScheme(
     onSurface = DarkEspresso,
     surfaceVariant = Linen,
     onSurfaceVariant = WarmGray,
+    surfaceContainerLowest = WarmWhite,
+    surfaceContainerLow = Cream,
+    surfaceContainer = Linen,
+    surfaceContainerHigh = ParchmentDark,
+    surfaceContainerHighest = LinenDark,
     error = RustRed,
     onError = WarmWhite,
-    outline = LightWarmGray
+    outline = LightWarmGray,
+    outlineVariant = Color(0xFFD4C8B8),
+    inverseSurface = DarkEspresso,
+    inverseOnSurface = Parchment,
+    inversePrimary = AntiqueGoldLight
 )
 
 private val DustyDarkColorScheme = darkColorScheme(
@@ -38,15 +47,30 @@ private val DustyDarkColorScheme = darkColorScheme(
     onPrimaryContainer = AntiqueGoldLight,
     secondary = AntiqueGold,
     onSecondary = DarkEspresso,
+    secondaryContainer = Teak,
+    onSecondaryContainer = AntiqueGoldLight,
+    tertiary = SageGreenLight,
+    onTertiary = DarkEspresso,
+    tertiaryContainer = SageGreenDark,
+    onTertiaryContainer = SageGreenLight,
     background = DarkBackground,
     onBackground = Parchment,
     surface = DarkSurface,
     onSurface = Parchment,
     surfaceVariant = DarkCard,
     onSurfaceVariant = LightWarmGray,
+    surfaceContainerLowest = Color(0xFF140E08),
+    surfaceContainerLow = DarkSurface,
+    surfaceContainer = DarkCard,
+    surfaceContainerHigh = DarkCardElevated,
+    surfaceContainerHighest = Color(0xFF4E3F34),
     error = Color(0xFFE57373),
     onError = DarkEspresso,
-    outline = WarmGray
+    outline = WarmGray,
+    outlineVariant = WalnutStain,
+    inverseSurface = Parchment,
+    inverseOnSurface = DarkEspresso,
+    inversePrimary = DustyBrown
 )
 
 @Composable

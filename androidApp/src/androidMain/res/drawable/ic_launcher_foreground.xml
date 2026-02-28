@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Pixel-art antique brown chair -->
+    <!-- Each "pixel" is a 3x3 unit square for a chunky pixel look -->
+    <!-- Chair is centered in the safe zone (24-84 viewport range) -->
+
+    <!-- Back rest - top rail -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M36,27 h36 v3 h-36 z" />
+
+    <!-- Back rest - left upright -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M36,27 h3 v30 h-3 z" />
+
+    <!-- Back rest - right upright -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M69,27 h3 v30 h-3 z" />
+
+    <!-- Back rest - middle slat 1 -->
+    <path android:fillColor="#7A5434"
+        android:pathData="M45,30 h3 v24 h-3 z" />
+
+    <!-- Back rest - middle slat 2 -->
+    <path android:fillColor="#7A5434"
+        android:pathData="M54,30 h3 v24 h-3 z" />
+
+    <!-- Back rest - middle slat 3 -->
+    <path android:fillColor="#7A5434"
+        android:pathData="M63,30 h3 v24 h-3 z" />
+
+    <!-- Back rest - cross bar -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M36,42 h36 v3 h-36 z" />
+
+    <!-- Seat surface -->
+    <path android:fillColor="#8B6C42"
+        android:pathData="M33,57 h42 v6 h-42 z" />
+
+    <!-- Seat surface highlight (pixel texture) -->
+    <path android:fillColor="#9E7E52"
+        android:pathData="M36,57 h3 v3 h-3 z" />
+    <path android:fillColor="#9E7E52"
+        android:pathData="M42,57 h3 v3 h-3 z" />
+    <path android:fillColor="#9E7E52"
+        android:pathData="M48,57 h3 v3 h-3 z" />
+    <path android:fillColor="#9E7E52"
+        android:pathData="M54,57 h3 v3 h-3 z" />
+    <path android:fillColor="#9E7E52"
+        android:pathData="M60,57 h3 v3 h-3 z" />
+    <path android:fillColor="#9E7E52"
+        android:pathData="M66,57 h3 v3 h-3 z" />
+
+    <!-- Seat front edge (darker shadow) -->
+    <path android:fillColor="#4A3728"
+        android:pathData="M33,63 h42 v2 h-42 z" />
+
+    <!-- Front left leg -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M33,63 h3 v18 h-3 z" />
+
+    <!-- Front right leg -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M72,63 h3 v18 h-3 z" />
+
+    <!-- Back left leg -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M36,57 h3 v24 h-3 z" />
+
+    <!-- Back right leg -->
+    <path android:fillColor="#5C3A1E"
+        android:pathData="M69,57 h3 v24 h-3 z" />
+
+    <!-- Front cross bar between legs -->
+    <path android:fillColor="#7A5434"
+        android:pathData="M33,72 h42 v3 h-42 z" />
+
+    <!-- Side cross bar left -->
+    <path android:fillColor="#7A5434"
+        android:pathData="M33,72 h6 v3 h-6 z" />
+
+    <!-- Side cross bar right -->
+    <path android:fillColor="#7A5434"
+        android:pathData="M69,72 h6 v3 h-6 z" />
+
+    <!-- Leg feet/caps (darker) -->
+    <path android:fillColor="#3E2510"
+        android:pathData="M33,78 h3 v3 h-3 z" />
+    <path android:fillColor="#3E2510"
+        android:pathData="M36,78 h3 v3 h-3 z" />
+    <path android:fillColor="#3E2510"
+        android:pathData="M69,78 h3 v3 h-3 z" />
+    <path android:fillColor="#3E2510"
+        android:pathData="M72,78 h3 v3 h-3 z" />
+
+    <!-- Top rail finials (decorative pixel bumps) -->
+    <path android:fillColor="#4A3728"
+        android:pathData="M36,24 h3 v3 h-3 z" />
+    <path android:fillColor="#4A3728"
+        android:pathData="M69,24 h3 v3 h-3 z" />
+
+</vector>

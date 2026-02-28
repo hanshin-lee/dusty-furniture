@@ -1,5 +1,7 @@
 package com.dusty.presentation.screens.detail
 
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,7 +69,10 @@ fun ListingDetailScreen(
                     modifier = Modifier.fillMaxSize().padding(padding),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary,
+                        strokeWidth = 2.dp
+                    )
                 }
             }
             is Resource.Error -> {
@@ -78,8 +85,19 @@ fun ListingDetailScreen(
             }
             is Resource.Success -> {
                 val listing = listingResource.data
+
+                var appeared by remember { mutableStateOf(false) }
+                LaunchedEffect(Unit) { appeared = true }
+                val contentAlpha by animateFloatAsState(
+                    targetValue = if (appeared) 1f else 0f,
+                    animationSpec = tween(400, easing = EaseOutCubic)
+                )
+
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(padding),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .graphicsLayer { alpha = contentAlpha },
                     contentPadding = PaddingValues(bottom = 100.dp)
                 ) {
                     // Images
@@ -87,7 +105,7 @@ fun ListingDetailScreen(
                         if (listing.images.isNotEmpty()) {
                             LazyRow(
                                 contentPadding = PaddingValues(horizontal = 16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
                                 items(listing.images) { imageUrl ->
                                     AsyncImage(
@@ -96,7 +114,7 @@ fun ListingDetailScreen(
                                         modifier = Modifier
                                             .width(320.dp)
                                             .height(280.dp)
-                                            .clip(MaterialTheme.shapes.medium),
+                                            .clip(MaterialTheme.shapes.large),
                                         contentScale = ContentScale.Crop
                                     )
                                 }
@@ -108,10 +126,13 @@ fun ListingDetailScreen(
                                     .height(280.dp)
                                     .padding(horizontal = 16.dp),
                                 color = MaterialTheme.colorScheme.surfaceVariant,
-                                shape = MaterialTheme.shapes.medium
+                                shape = MaterialTheme.shapes.large
                             ) {
                                 Box(contentAlignment = Alignment.Center) {
-                                    Text("No Images Available")
+                                    Text(
+                                        "No Images Available",
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
                                 }
                             }
                         }
@@ -123,9 +144,10 @@ fun ListingDetailScreen(
                             Text(
                                 text = listing.title,
                                 style = MaterialTheme.typography.headlineMedium,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onBackground
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(10.dp))
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -141,23 +163,26 @@ fun ListingDetailScreen(
                         }
                     }
 
-                    // Details
+                    // Details Card
                     item {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
+                            shape = MaterialTheme.shapes.medium,
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant
-                            )
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                            ),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
                                     "Details",
                                     style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.onBackground
                                 )
-                                Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(10.dp))
 
                                 if (listing.era != null) DetailRow("Era", listing.era)
                                 if (listing.material != null) DetailRow("Material", listing.material)
@@ -177,12 +202,14 @@ fun ListingDetailScreen(
                             Text(
                                 "Description",
                                 style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onBackground
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = listing.description,
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -203,6 +230,7 @@ fun ListingDetailScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
                                 .height(56.dp),
+                            shape = MaterialTheme.shapes.medium,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (state.addedToCart)
                                     MaterialTheme.colorScheme.tertiary
@@ -219,7 +247,10 @@ fun ListingDetailScreen(
                             } else {
                                 Icon(Icons.Default.ShoppingCart, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(if (state.addedToCart) "Added to Cart" else "Add to Cart")
+                                Text(
+                                    if (state.addedToCart) "Added to Cart" else "Add to Cart",
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                             }
                         }
 
@@ -235,11 +266,12 @@ fun ListingDetailScreen(
 
                     // Reviews section
                     item {
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
                         Text(
                             "Reviews",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
                     }
@@ -274,7 +306,7 @@ private fun DetailRow(label: String, value: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp),
+            .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -285,7 +317,8 @@ private fun DetailRow(label: String, value: String) {
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -296,11 +329,13 @@ private fun ReviewItem(review: Review) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),
+        shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(14.dp)) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
@@ -311,10 +346,11 @@ private fun ReviewItem(review: Review) {
                 )
             }
             if (review.comment != null) {
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = review.comment,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
