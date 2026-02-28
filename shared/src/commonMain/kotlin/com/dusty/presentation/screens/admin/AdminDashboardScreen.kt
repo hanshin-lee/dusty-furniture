@@ -19,6 +19,7 @@ import com.dusty.data.model.Profile
 import com.dusty.data.model.UserRole
 import com.dusty.presentation.theme.ForestGreen
 import com.dusty.util.Resource
+import com.dusty.util.toPriceString
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -130,7 +131,7 @@ private fun PendingListingCard(
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = "$${String.format("%.2f", listing.price)} | ${listing.condition.displayName}",
+                text = "$${listing.price.toPriceString()} | ${listing.condition.displayName}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

@@ -24,6 +24,7 @@ import com.dusty.presentation.components.ConditionBadge
 import com.dusty.presentation.routes.CartRoute
 import com.dusty.presentation.routes.LoginRoute
 import com.dusty.util.Resource
+import com.dusty.util.toPriceString
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -130,7 +131,7 @@ fun ListingDetailScreen(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 Text(
-                                    text = "$${String.format("%.2f", listing.price)}",
+                                    text = "$${listing.price.toPriceString()}",
                                     style = MaterialTheme.typography.headlineLarge,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.primary

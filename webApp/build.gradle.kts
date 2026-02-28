@@ -18,6 +18,8 @@ kotlin {
         val wasmJsMain by getting {
             dependencies {
                 implementation(project(":shared"))
+                implementation(compose.runtime)
+                implementation(compose.ui)
             }
         }
     }

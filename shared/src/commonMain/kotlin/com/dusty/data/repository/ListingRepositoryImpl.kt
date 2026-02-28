@@ -8,6 +8,7 @@ import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 import io.github.jan.supabase.postgrest.query.Order
+import io.github.jan.supabase.postgrest.query.filter.TextSearchType
 import io.github.jan.supabase.storage.storage
 
 class ListingRepositoryImpl(
@@ -41,7 +42,7 @@ class ListingRepositoryImpl(
         return client.from("listings").select {
             filter {
                 eq("status", "active")
-                textSearch("fts", query)
+                textSearch("fts", query, TextSearchType.NONE)
             }
             order("created_at", Order.DESCENDING)
         }.decodeList()

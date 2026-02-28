@@ -3,6 +3,7 @@ package com.dusty.presentation.screens.profile
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import com.dusty.util.toPriceString
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
@@ -220,7 +221,7 @@ private fun OrderCard(order: Order) {
             }
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    text = "$${String.format("%.2f", order.totalAmount)}",
+                    text = "$${order.totalAmount.toPriceString()}",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary

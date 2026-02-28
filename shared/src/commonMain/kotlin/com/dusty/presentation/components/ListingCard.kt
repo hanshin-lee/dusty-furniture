@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.dusty.data.model.Listing
+import com.dusty.util.toPriceString
 
 @Composable
 fun ListingCard(
@@ -74,7 +75,7 @@ fun ListingCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "$${String.format("%.2f", listing.price)}",
+                        text = "$${listing.price.toPriceString()}",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary

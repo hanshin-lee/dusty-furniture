@@ -3,6 +3,7 @@ package com.dusty.presentation.screens.seller
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import com.dusty.util.toPriceString
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -169,7 +170,7 @@ private fun SellerListingRow(listing: Listing, onEdit: () -> Unit) {
                 Spacer(modifier = Modifier.height(2.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "$${String.format("%.2f", listing.price)}",
+                        text = "$${listing.price.toPriceString()}",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary

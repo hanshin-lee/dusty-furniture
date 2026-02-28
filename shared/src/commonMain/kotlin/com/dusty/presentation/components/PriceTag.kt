@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.dusty.util.toPriceString
 
 @Composable
 fun PriceTag(
@@ -12,7 +13,7 @@ fun PriceTag(
     modifier: Modifier = Modifier
 ) {
     Text(
-        text = "$${String.format("%.2f", price)}",
+        text = "$${price.toPriceString()}",
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.primary,

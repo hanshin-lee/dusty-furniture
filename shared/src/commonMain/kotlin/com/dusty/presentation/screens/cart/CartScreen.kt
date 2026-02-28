@@ -19,6 +19,7 @@ import coil3.compose.AsyncImage
 import com.dusty.data.model.CartItem
 import com.dusty.presentation.routes.CheckoutRoute
 import com.dusty.util.Resource
+import com.dusty.util.toPriceString
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +60,7 @@ fun CartScreen(navController: NavController) {
                         Column {
                             Text("Total", style = MaterialTheme.typography.bodyMedium)
                             Text(
-                                text = "$${String.format("%.2f", state.total)}",
+                                text = "$${state.total.toPriceString()}",
                                 style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
@@ -171,7 +172,7 @@ private fun CartItemRow(
                     maxLines = 2
                 )
                 Text(
-                    text = "$${String.format("%.2f", listing.price)}",
+                    text = "$${listing.price.toPriceString()}",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
