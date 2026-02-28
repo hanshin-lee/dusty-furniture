@@ -1,0 +1,12 @@
+*.iml
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+local.properties
+.idea/
+.DS_Store
+*.xcworkspace
+xcuserdata/
+Pods/
+*.log
+.kotlin/
