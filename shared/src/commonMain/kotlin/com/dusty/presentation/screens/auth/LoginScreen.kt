@@ -179,6 +179,21 @@ fun LoginScreen(navController: NavController) {
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
+
+            TextButton(
+                onClick = {
+                    navController.navigate(HomeRoute) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            ) {
+                Text(
+                    text = "Continue Browsing",
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }

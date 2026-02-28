@@ -15,6 +15,7 @@ kotlin {
         androidMain.dependencies {
             implementation(project(":shared"))
             implementation(libs.ktor.client.cio)
+            implementation(libs.androidx.activity.compose)
         }
     }
 }
